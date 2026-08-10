@@ -3,7 +3,7 @@ rgx = {
     name     = "preprod-rg"
     location = "East US"
   }
-   rg2 = {
+  rg2 = {
     name     = "preprod-rg1"
     location = "East US"
   }
@@ -50,16 +50,16 @@ pip = {
 
 vms = {
   vm1 = {
-    nic_name           = "preprod-nic"
-    location           = "East US"
-    resource_group_name= "preprod-rg"
-    nic_subnet_name    = "preprod-subnet"
-    nic_virtual_name   = "preprod-vnet"
-    nic_pip_name       = "preprod-pip"
-    vm_name            = "preprod-vm"
-    vm_size            = "Standard_D2as_v5"
-    admin_username     = "azureuser"
-    admin_password     = "P@ssw0rd12345!"
+    nic_name            = "preprod-nic"
+    location            = "East US"
+    resource_group_name = "preprod-rg"
+    nic_subnet_name     = "preprod-subnet"
+    nic_virtual_name    = "preprod-vnet"
+    nic_pip_name        = "preprod-pip"
+    vm_name             = "preprod-vm"
+    vm_size             = "Standard_D2as_v5"
+    admin_username      = "azureuser"
+    admin_password      = "P@ssw0rd12345!"
   }
 }
 
@@ -110,19 +110,19 @@ nsg = {
 
 lb = {
   lb1 = {
-    name                 = "preprod-lb"
-    location             = "East US"
-    resource_group_name  = "preprod-rg"
-    sku                  = "Standard"
-    public_ip_name       = "preprod-lb-pip"
-    frontend_name        = "PublicIPAddress"
-    backend_pool_name    = "BackEndAddressPool"
-    probe_name           = "http-probe"
-    probe_port           = 80
-    probe_protocol       = "Http"
-    rule_name            = "LBRule"
-    rule_protocol        = "Tcp"
-    frontend_port        = 80
-    backend_port         = 80
+    name                = "preprod-lb"
+    location            = "East US"
+    resource_group_name = "preprod-rg"
+    sku                 = "Standard"
+    public_ip_name      = "preprod-lb-pip"
+    frontend_name       = "PublicIPAddress"
+    backend_pool_name   = "BackEndAddressPool"
+    probe_name          = "http-probe"
+    probe_port          = 80
+    probe_protocol      = "Http"
+    rule_name           = "LBRule"
+    rule_protocol       = "Tcp"
+    frontend_port       = 80
+    backend_port        = 80
   }
 }
