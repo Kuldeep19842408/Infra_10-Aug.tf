@@ -3,6 +3,10 @@ rgx = {
     name     = "preprod-rg"
     location = "East US"
   }
+   rg2 = {
+    name     = "preprod-rg1"
+    location = "East US"
+  }
 }
 
 vnet = {
@@ -17,6 +21,12 @@ vnet = {
 subnet = {
   sub1 = {
     name                 = "preprod-subnet"
+    virtual_network_name = "preprod-vnet"
+    resource_group_name  = "preprod-rg"
+    address_prefixes     = ["10.0.1.0/24"]
+  }
+  sub2 = {
+    name                 = "preprod-subnet1"
     virtual_network_name = "preprod-vnet"
     resource_group_name  = "preprod-rg"
     address_prefixes     = ["10.0.1.0/24"]
