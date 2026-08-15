@@ -29,7 +29,7 @@ subnet = {
     name                 = "preprod-subnet1"
     virtual_network_name = "preprod-vnet"
     resource_group_name  = "preprod-rg"
-    address_prefixes     = ["10.0.1.0/24"]
+    address_prefixes     = ["10.0.3.0/24"]
   }
 }
 
