@@ -1,158 +1,44 @@
-trigger:
-  branches:
-    include:
-      - main
-      - develop
+name: Terraform CI/CD
 
-pr:
-  branches:
-    include:
+on:
+  push:
+    branches:
       - main
 
-pool:
-  vmImage: ubuntu-latest
+  pull_request:
+    branches:
+      - main
 
-variables:
-  terraformVersion: '1.14.6'
+permissions:
+  contents: read
 
-stages:
-
-# =========================
-# STAGE 1 - VALIDATE
-# =========================
-
-- stage: Validate
-  displayName: Terraform Validation
-
-  jobs:
-  - job: TerraformValidate
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
 
     steps:
 
-    - checkout: self
+      # 1. Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - task: TerraformInstaller@1
-      displayName: Install Terraform
-      inputs:
-        terraformVersion: $(terraformVersion)
+      # 2. Install Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
-    - script: |
-        terraform --version
-      displayName: Check Terraform Version
+      # 3. Terraform Format Check
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
 
-    - script: |
-        terraform init -backend=false
-      displayName: Terraform Init
+      # 4. Terraform Init
+      - name: Terraform Init
+        run: terraform init
 
-    - script: |
-        terraform validate
-      displayName: Terraform Validate
+      # 5. Terraform Validate
+      - name: Terraform Validate
+        run: terraform validate
 
-
-# =========================
-# STAGE 2 - SECURITY SCAN
-# =========================
-
-- stage: SecurityScan
-  displayName: Security Scanning
-
-  dependsOn: Validate
-
-  jobs:
-  - job: Security
-
-    steps:
-
-    - checkout: self
-
-    - script: |
-        pip install checkov
-      displayName: Install Checkov
-
-    - script: |
-        checkov -d .
-      displayName: Checkov Scan
-
-    - script: |
-        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
-      displayName: Install Trivy
-
-    - script: |
-        ./bin/trivy config .
-      displayName: Trivy IaC Scan
-
-
-# =========================
-# STAGE 3 - TERRAFORM PLAN
-# =========================
-
-- stage: Plan
-  displayName: Terraform Plan
-
-  dependsOn: SecurityScan
-
-  jobs:
-  - job: TerraformPlan
-
-    steps:
-
-    - checkout: self
-
-    - task: TerraformInstaller@1
-      inputs:
-        terraformVersion: $(terraformVersion)
-
-    - script: |
-        terraform init
-      displayName: Terraform Init
-
-    - script: |
-        terraform plan -out=tfplan
-      displayName: Terraform Plan
-
-    - publish: tfplan
-      artifact: terraform-plan
-      displayName: Publish Terraform Plan
-
-
-# =========================
-# STAGE 4 - APPLY
-# =========================
-
-- stage: Apply
-  displayName: Terraform Apply
-
-  dependsOn: Plan
-
-  condition: succeeded()
-
-  jobs:
-
-  - deployment: TerraformApply
-    displayName: Apply Infrastructure
-
-    environment: production
-
-    strategy:
-      runOnce:
-
-        deploy:
-
-          steps:
-
-          - checkout: self
-
-          - task: TerraformInstaller@1
-            inputs:
-              terraformVersion: $(terraformVersion)
-
-          - script: |
-              terraform init
-            displayName: Terraform Init
-
-          - download: current
-            artifact: terraform-plan
-
-          - script: |
-              terraform apply -auto-approve terraform-plan/tfplan
-            displayName: Terraform Apply
+      # 6. Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan
