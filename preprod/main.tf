@@ -21,11 +21,6 @@ module "publicip" {
   pip        = var.pip
 }
 
-module "virtual_machine" {
-  depends_on = [module.subnet, module.publicip]
-  source     = "../Modules/azurerm_vm"
-  vms        = var.vms
-}
 
 module "bastion" {
   depends_on = [module.virtual_network]
