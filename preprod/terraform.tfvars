@@ -48,20 +48,6 @@ pip = {
   }
 }
 
-vms = {
-  vm1 = {
-    nic_name            = "preprod-nic"
-    location            = "East US"
-    resource_group_name = "preprod-rg"
-    nic_subnet_name     = "preprod-subnet"
-    nic_virtual_name    = "preprod-vnet"
-    nic_pip_name        = "preprod-pip"
-    vm_name             = "preprod-vm"
-    vm_size             = "Standard_D2as_v5"
-    admin_username      = "azureuser"
-    admin_password      = "P@ssw0rd12345!"
-  }
-}
 
 bastion = {
   bas1 = {
