@@ -1,38 +1,44 @@
-name: Terraform
+name: Terraform CI/CD
 
 on:
   push:
     branches:
       - main
 
+  pull_request:
+    branches:
+      - main
+
 permissions:
-  id-token: write
   contents: read
 
 jobs:
   terraform:
+    name: Terraform
     runs-on: ubuntu-latest
 
     steps:
 
-      - name: Checkout Code
+      # 1. Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
+      # 2. Install Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      # 3. Terraform Format Check
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+
+      # 4. Terraform Init
       - name: Terraform Init
         run: terraform init
 
+      # 5. Terraform Validate
+      - name: Terraform Validate
+        run: terraform validate
+
+      # 6. Terraform Plan
       - name: Terraform Plan
         run: terraform plan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
