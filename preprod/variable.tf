@@ -10,9 +10,9 @@ variable "subnet" {
 variable "vnet" {
   type = any
 }
-variable "vms" {
-  type = any
-}
+# variable "vms" {
+#   type = any
+# }
 variable "bastion" {
   type = any
 }
