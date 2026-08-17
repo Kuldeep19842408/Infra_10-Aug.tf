@@ -9,106 +9,106 @@ rgx = {
   }
 }
 
-vnet = {
-  vnet1 = {
-    name                = "preprod-vnet"
-    location            = "East US"
-    resource_group_name = "preprod-rg"
-    address_space       = ["10.0.0.0/16"]
-  }
-}
+# vnet = {
+#   vnet1 = {
+#     name                = "preprod-vnet"
+#     location            = "East US"
+#     resource_group_name = "preprod-rg"
+#     address_space       = ["10.0.0.0/16"]
+#   }
+# }
 
-subnet = {
-  sub1 = {
-    name                 = "preprod-subnet"
-    virtual_network_name = "preprod-vnet"
-    resource_group_name  = "preprod-rg"
-    address_prefixes     = ["10.0.1.0/24"]
-  }
-  sub2 = {
-    name                 = "preprod-subnet1"
-    virtual_network_name = "preprod-vnet"
-    resource_group_name  = "preprod-rg"
-    address_prefixes     = ["10.0.3.0/24"]
-  }
-}
+# subnet = {
+#   sub1 = {
+#     name                 = "preprod-subnet"
+#     virtual_network_name = "preprod-vnet"
+#     resource_group_name  = "preprod-rg"
+#     address_prefixes     = ["10.0.1.0/24"]
+#   }
+#   sub2 = {
+#     name                 = "preprod-subnet1"
+#     virtual_network_name = "preprod-vnet"
+#     resource_group_name  = "preprod-rg"
+#     address_prefixes     = ["10.0.3.0/24"]
+#   }
+# }
 
-pip = {
-  pip1 = {
-    name                = "preprod-pip"
-    resource_group_name = "preprod-rg"
-    location            = "East US"
-    allocation_method   = "Static"
-  }
-  pip2 = {
-    name                = "preprod-lb-pip"
-    resource_group_name = "preprod-rg"
-    location            = "East US"
-    allocation_method   = "Static"
-  }
-}
+# pip = {
+#   pip1 = {
+#     name                = "preprod-pip"
+#     resource_group_name = "preprod-rg"
+#     location            = "East US"
+#     allocation_method   = "Static"
+#   }
+#   pip2 = {
+#     name                = "preprod-lb-pip"
+#     resource_group_name = "preprod-rg"
+#     location            = "East US"
+#     allocation_method   = "Static"
+#   }
+# }
 
 
-bastion = {
-  bas1 = {
-    subnet_name          = "AzureBastionSubnet"
-    public_ip_name       = "preprod-bastion-pip"
-    bastion_name         = "preprod-bastion"
-    location             = "East US"
-    resource_group_name  = "preprod-rg"
-    virtual_network_name = "preprod-vnet"
-    address_prefixes     = ["10.0.2.0/27"]
-  }
-}
+# bastion = {
+#   bas1 = {
+#     subnet_name          = "AzureBastionSubnet"
+#     public_ip_name       = "preprod-bastion-pip"
+#     bastion_name         = "preprod-bastion"
+#     location             = "East US"
+#     resource_group_name  = "preprod-rg"
+#     virtual_network_name = "preprod-vnet"
+#     address_prefixes     = ["10.0.2.0/27"]
+#   }
+# }
 
-keyvault = {
-  kv1 = {
-    name                        = "preprod-kv-unique123"
-    location                    = "East US"
-    resource_group_name         = "preprod-rg"
-    sku_name                    = "standard"
-    soft_delete_retention_days  = 7
-    purge_protection_enabled    = false
-    enabled_for_disk_encryption = true
-  }
-}
+# keyvault = {
+#   kv1 = {
+#     name                        = "preprod-kv-unique123"
+#     location                    = "East US"
+#     resource_group_name         = "preprod-rg"
+#     sku_name                    = "standard"
+#     soft_delete_retention_days  = 7
+#     purge_protection_enabled    = false
+#     enabled_for_disk_encryption = true
+#   }
+# }
 
-nsg = {
-  nsg1 = {
-    name                = "preprod-nsg"
-    location            = "East US"
-    resource_group_name = "preprod-rg"
-    security_rules = [
-      {
-        name                       = "AllowSSH"
-        priority                   = 100
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        source_port_range          = "*"
-        destination_port_range     = "22"
-        source_address_prefix      = "*"
-        destination_address_prefix = "*"
-      }
-    ]
-  }
-}
+# nsg = {
+#   nsg1 = {
+#     name                = "preprod-nsg"
+#     location            = "East US"
+#     resource_group_name = "preprod-rg"
+#     security_rules = [
+#       {
+#         name                       = "AllowSSH"
+#         priority                   = 100
+#         direction                  = "Inbound"
+#         access                     = "Allow"
+#         protocol                   = "Tcp"
+#         source_port_range          = "*"
+#         destination_port_range     = "22"
+#         source_address_prefix      = "*"
+#         destination_address_prefix = "*"
+#       }
+#     ]
+#   }
+# }
 
-lb = {
-  lb1 = {
-    name                = "preprod-lb"
-    location            = "East US"
-    resource_group_name = "preprod-rg"
-    sku                 = "Standard"
-    public_ip_name      = "preprod-lb-pip"
-    frontend_name       = "PublicIPAddress"
-    backend_pool_name   = "BackEndAddressPool"
-    probe_name          = "http-probe"
-    probe_port          = 80
-    probe_protocol      = "Http"
-    rule_name           = "LBRule"
-    rule_protocol       = "Tcp"
-    frontend_port       = 80
-    backend_port        = 80
-  }
-}
+# lb = {
+#   lb1 = {
+#     name                = "preprod-lb"
+#     location            = "East US"
+#     resource_group_name = "preprod-rg"
+#     sku                 = "Standard"
+#     public_ip_name      = "preprod-lb-pip"
+#     frontend_name       = "PublicIPAddress"
+#     backend_pool_name   = "BackEndAddressPool"
+#     probe_name          = "http-probe"
+#     probe_port          = 80
+#     probe_protocol      = "Http"
+#     rule_name           = "LBRule"
+#     rule_protocol       = "Tcp"
+#     frontend_port       = 80
+#     backend_port        = 80
+#   }
+# }
